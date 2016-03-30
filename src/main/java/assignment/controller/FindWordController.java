@@ -21,7 +21,10 @@ public class FindWordController {
     @Setter
     private ProcessingService processingService;
 
+/*
+Controller to handle REST endpoint call with a String parameter
 
+ */
     @RequestMapping(value="/findWord", method = RequestMethod.GET)
     public ResponseEntity<String> findWord(@RequestParam String word) throws FileNotFoundException {
         if(word == null || !word.matches("[a-zA-Z]+")){

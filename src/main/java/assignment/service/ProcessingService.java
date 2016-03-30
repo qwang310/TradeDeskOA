@@ -10,6 +10,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/*
+This service handle all the calculation of number of request
+and number of occurrences in all the files
+ */
+
 @Service
 public class ProcessingService {
 
@@ -36,6 +41,9 @@ public class ProcessingService {
         return result;
     }
 
+    /*
+    Scan every file in the path
+     */
     public Result beginScanFolder(String word) throws FileNotFoundException {
 
         File folder = new File(txtfilesPath);
@@ -53,8 +61,9 @@ public class ProcessingService {
 
     }
 
-
-
+    /*
+    Scan each line to see if the word exists
+     */
 
     public void beginScanFile(Scanner inputFile, String word) throws FileNotFoundException {
         List<String> lines = new ArrayList<>();

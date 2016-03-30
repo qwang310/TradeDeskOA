@@ -11,7 +11,10 @@ import java.util.HashMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 
+/*
+Some sample tests to test how to count occurrences of the word in the files
 
+ */
 public class MainProgramTest {
 
 	private ProcessingService processingService;
@@ -36,14 +39,14 @@ public class MainProgramTest {
 		int occurrences = result.getNumberOfOccurrences();
 
 		assertThat(result, notNullValue());
-		assertThat(occurrences, is(6));
+		assertThat(occurrences, is(15));
 
 		result = processingService.countWord("Friend");
 
 		occurrences = result.getNumberOfOccurrences();
 
 		assertThat(result, notNullValue());
-		assertThat(occurrences, is(2));
+		assertThat(occurrences, is(5));
 
 	}
 
