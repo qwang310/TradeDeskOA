@@ -1,6 +1,21 @@
 # OnlineAssignment
 
-The task is to build a server-side application built on a java-based technology of your choice (Tomcat, Netty, pure ServerSocket, etc) and provide an endpoint in a protocol of your choice (RESTful, own binary, SOAP, etc). The application should should accept requests with an English word as a parameter and return an output composed of 2 integers:
+User can build and run project using command: gradlew clean build bootRun
+This single command also include unit tests
 
-1.The number of requests sent to this server with this word as a parameter
-2.The number of occurrences of this word in this set of text files (which comes from Project Gutenberg)
+To check result on UI
+localhost:8080/findWord?word=
+
+For example, to check word "Paris"
+localhost:8080/findWord?word=Paris
+
+User can only search a string that contains [a-zA-Z]
+
+The display on the UI is a string that tells how many number of requests for this word, and how many number of occurrence for this word in the files.
+
+
+
+
+Edge Cases Defined:
+1. Each word is case sensitive. Friend and friend are counted as two different words.
+2. friend and friend's are both counted as "friend"; friends and friends' are both counted as "friends"
