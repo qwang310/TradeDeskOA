@@ -69,12 +69,11 @@ public class FindWordControllerTest {
 		assertThat(resultString, notNullValue());
 		assertThat(resultString, is("Not a valid English word"));
 
-
 		responseEntity = findWordController.findWord("ha ha");
 		resultString = responseEntity.getBody();
 		assertThat(resultString, notNullValue());
 		assertThat(resultString, is("Not a valid English word"));
-		
+
 		responseEntity = findWordController.findWord("bad-word");
 		resultString = responseEntity.getBody();
 		assertThat(resultString, notNullValue());
