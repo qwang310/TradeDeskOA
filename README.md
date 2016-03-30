@@ -4,10 +4,10 @@ User can build and run project using command: gradlew clean build bootRun
 This single command also include unit tests
 
 To check result on UI
-localhost:8080/findWord?word=
+Search http://localhost:8080/findWord?word=  with the English word
 
 For example, to check word "Paris"
-localhost:8080/findWord?word=Paris
+Search http://localhost:8080/findWord?word=Paris
 
 User can only search a string that contains [a-zA-Z]
 
