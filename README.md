@@ -1,6 +1,7 @@
 # OnlineAssignment
 
 User can build and run project using command: gradlew clean build bootRun
+
 This single command also include unit tests
 
 To check result on UI
