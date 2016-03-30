@@ -2,6 +2,7 @@ package assignment.service;
 
 
 import assignment.dao.Result;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,10 +13,11 @@ import java.util.*;
 @Service
 public class ProcessingService {
 
-
+    @Setter
     @Resource(name = "wordMap")
     private HashMap<String, Result> map;
 
+    @Setter
     private String txtfilesPath = "src/main/resources/txtfiles/";
 
 
@@ -64,7 +66,7 @@ public class ProcessingService {
         }
 
         for(String line : lines){
-            String lettersOnly = line.replaceAll("[^a-zA-Z\\s]", "").trim();
+            String lettersOnly = line.replaceAll("[^a-zA-Z\\s]", " ").trim();
             String[] stringList = lettersOnly.split("\\s+");
 
             for(String eachString : stringList){
@@ -77,14 +79,6 @@ public class ProcessingService {
 
         map.put(word, result);
 
-    }
-
-    public void setMap(HashMap<String, Result> map){
-        this.map = map;
-    }
-
-    public void setTxtfilesPath(String path){
-        this.txtfilesPath = path;
     }
 
 }

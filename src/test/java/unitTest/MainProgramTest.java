@@ -18,7 +18,7 @@ public class MainProgramTest {
 
 	private HashMap<String, Result> map = new HashMap<String, Result>();
 
-	public String testFilePath = "src/test/resources/txtfiles/";
+	private String testFilePath = "src/test/resources/txtfiles/";
 
 
 	@Before
@@ -31,12 +31,19 @@ public class MainProgramTest {
 
 	@Test
 	public void shouldFindWord() throws Exception {
-		Result result = processingService.countWord("Paris");
+		Result result = processingService.countWord("friend");
 
 		int occurrences = result.getNumberOfOccurrences();
 
 		assertThat(result, notNullValue());
-		assertThat(occurrences, is(12));
+		assertThat(occurrences, is(6));
+
+		result = processingService.countWord("Friend");
+
+		occurrences = result.getNumberOfOccurrences();
+
+		assertThat(result, notNullValue());
+		assertThat(occurrences, is(2));
 
 	}
 
