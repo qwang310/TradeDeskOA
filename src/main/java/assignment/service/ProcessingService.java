@@ -16,7 +16,7 @@ public class ProcessingService {
     @Resource(name = "wordMap")
     private HashMap<String, Result> map;
 
-    private String txtfilesPath = "src/main/resource/txtfiles/";
+    private String txtfilesPath = "src/main/resources/txtfiles/";
 
 
     public Result countWord(String word) throws FileNotFoundException {

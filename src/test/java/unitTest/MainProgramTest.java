@@ -18,7 +18,7 @@ public class MainProgramTest {
 
 	private HashMap<String, Result> map = new HashMap<String, Result>();
 
-	public String testFilePath = "src/test/resource/txtfiles/";
+	public String testFilePath = "src/test/resources/txtfiles/";
 
 
 	@Before
