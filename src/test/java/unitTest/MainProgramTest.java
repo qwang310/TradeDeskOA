@@ -41,12 +41,20 @@ public class MainProgramTest {
 		assertThat(result, notNullValue());
 		assertThat(occurrences, is(15));
 
-		result = processingService.countWord("Friend");
 
+
+		result = processingService.countWord("Friend");
 		occurrences = result.getNumberOfOccurrences();
 
 		assertThat(result, notNullValue());
 		assertThat(occurrences, is(5));
+
+
+		result = processingService.countWord("friends");
+		occurrences = result.getNumberOfOccurrences();
+
+		assertThat(result, notNullValue());
+		assertThat(occurrences, is(15));
 
 	}
 
