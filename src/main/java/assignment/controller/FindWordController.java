@@ -3,6 +3,7 @@ package assignment.controller;
 import java.io.FileNotFoundException;
 import assignment.dao.Result;
 import assignment.service.ProcessingService;
+import assignment.service.ProcessingServiceNew;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,10 @@ public class FindWordController {
     @Setter
     private ProcessingService processingService;
 
+    @Autowired
+    @Setter
+    private ProcessingServiceNew processingServiceNew;
+
 /*
 Controller to handle REST endpoint call with a String parameter
 
@@ -32,6 +37,20 @@ Controller to handle REST endpoint call with a String parameter
         }
 
         Result result = processingService.countWord(word);
+        int numberOfRequests = result.getNumberOfRequests();
+        int numberOfOccurrence = result.getNumberOfOccurrences();
+        String resultString = ("For word '" + word + "', the number of request is "+ numberOfRequests + ", and the number of occurences is " + numberOfOccurrence);
+        return new ResponseEntity<String>(resultString, OK);
+
+    }
+
+    @RequestMapping(value="/findWordNew", method = RequestMethod.GET)
+    public ResponseEntity<String> findWordNew(@RequestParam String word) throws FileNotFoundException {
+        if(word == null || !word.matches("[a-zA-Z]+")){
+            return new ResponseEntity<String>("Not a valid English word", HttpStatus.BAD_REQUEST);
+        }
+
+        Result result = processingServiceNew.countWord(word);
         int numberOfRequests = result.getNumberOfRequests();
         int numberOfOccurrence = result.getNumberOfOccurrences();
         String resultString = ("For word '" + word + "', the number of request is "+ numberOfRequests + ", and the number of occurences is " + numberOfOccurrence);

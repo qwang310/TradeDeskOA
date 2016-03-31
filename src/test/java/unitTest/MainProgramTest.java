@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
@@ -19,7 +20,7 @@ public class MainProgramTest {
 
 	private ProcessingService processingService;
 
-	private HashMap<String, Result> map = new HashMap<String, Result>();
+	private ConcurrentHashMap<String, Result> map = new ConcurrentHashMap<String, Result>();
 
 	private String testFilePath = "src/test/resources/txtfiles/";
 

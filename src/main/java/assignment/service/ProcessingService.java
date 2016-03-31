@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /*
 This service handle all the calculation of number of request
@@ -20,7 +21,7 @@ public class ProcessingService {
 
     @Setter
     @Resource(name = "wordMap")
-    private HashMap<String, Result> map;
+    private ConcurrentHashMap<String, Result> map;
 
     @Setter
     private String txtfilesPath = "src/main/resources/txtfiles/";
@@ -33,7 +34,7 @@ public class ProcessingService {
             result.setNumberOfRequests(result.getNumberOfRequests() + 1);
             map.put(word, result);
         }else{
-            map.put(word, new Result(word, 1, 0));
+            map.putIfAbsent(word, new Result(word, 1, 0));
             result = beginScanFolder(word);
             map.put(word, result);
         }

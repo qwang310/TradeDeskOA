@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -21,7 +22,7 @@ public class FindWordControllerTest {
 
 	private ProcessingService processingService;
 
-	private HashMap<String, Result> map = new HashMap<String, Result>();
+	private ConcurrentHashMap<String, Result> map = new ConcurrentHashMap<String, Result>();
 
 	private String testFilePath = "src/test/resources/txtfiles/";
 
