@@ -1,22 +1,8 @@
-# OnlineAssignment
+Write a password validation service in Java, meant to be configurable via IoC using the Spring Framework. The service is meant to check a text string for compliance to any number of password validation rules.
+The rules currently known are:
 
-User can build and run project using command: gradlew clean build bootRun
+-Must consist of a mixture of lowercase letters and numerical digits only, with at least one of each.
+-Must be between 5 and 12 characters in length.
+-Must not contain any sequence of characters immediately followed by the same sequence.
 
-This single command also include unit tests
-
-To check result on UI
-Search http://localhost:8080/findWord?word=  with the English word
-
-For example, to check word "Paris"
-Search http://localhost:8080/findWord?word=Paris
-
-User can only search a string that contains [a-zA-Z]
-
-The display on the UI is a string that tells how many number of requests for this word, and how many number of occurrence for this word in the files.
-
-
-
-
-Edge Cases Defined:
-1. Each word is case sensitive. Friend and friend are counted as two different words.
-2. friend and friend's are both counted as "friend"; friends and friends' are both counted as "friends"
+Include all artifacts in a zip file. The project should build without any errors using either Maven or Gradle. The service should be ready for insertion into an existing production code base. Show tests for the validator service and any constituent classes involved in fulfillment of the service.
