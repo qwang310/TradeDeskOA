@@ -26,7 +26,7 @@ public class ValidateServiceTest {
 		Boolean test1 = validateService.FirstRule("friend1");
 		assertThat(test1, is(true));
 
-		Boolean test2 = validateService.FirstRule("fri1231312311313end");
+		Boolean test2 = validateService.FirstRule("fri1234567890end");
 		assertThat(test2, is(false));
 
 		Boolean test3 = validateService.FirstRule("fri1");
@@ -40,16 +40,13 @@ public class ValidateServiceTest {
 		Boolean test1 = validateService.SecondRule("friend");
 		assertThat(test1, is(false));
 
-		Boolean test2 = validateService.SecondRule("friendbbb");
-		assertThat(test2, is(false));
-
 		Boolean test3 = validateService.SecondRule("friend13F");
 		assertThat(test3, is(false));
 
 		Boolean test4 = validateService.SecondRule("*&^%$#9f");
 		assertThat(test4, is(false));
 
-		Boolean test5 = validateService.SecondRule("bacddj7");
+		Boolean test5 = validateService.SecondRule("bacdej7");
 		assertThat(test5, is(true));
 
 
@@ -57,36 +54,70 @@ public class ValidateServiceTest {
 
 	@Test
 	public void shouldValidateRuleThree(){
-		Boolean test1 = validateService.ThirdRuleSecond("aaf00f00ff");
+		Boolean test1 = validateService.ThirdRule("af0bf0bfaf");
 		assertThat(test1, is(false));
 
-		Boolean test2 = validateService.ThirdRuleSecond("foola2foo");
+		Boolean test2 = validateService.ThirdRule("foala2foa");
 		assertThat(test2, is(true));
 
-		Boolean test3 = validateService.ThirdRuleSecond("foo1foo1");
+		Boolean test3 = validateService.ThirdRule("foo1foo1");
 		assertThat(test3, is(false));
 
-		Boolean test4 = validateService.ThirdRuleSecond("foolfoo4foo");
+		Boolean test4 = validateService.ThirdRule("foclfoc4foc");
 		assertThat(test4, is(true));
 
-		Boolean test5 = validateService.ThirdRuleSecond("aaaa");
+		Boolean test5 = validateService.ThirdRule("aaaa");
 		assertThat(test5, is(false));
+
+		Boolean test6 = validateService.ThirdRule("bccu");
+		assertThat(test6, is(false));
 
 	}
 
 	@Test
-	public void shouldValidatePassword(){
+	public void shouldValidateRuleThreeSecondWay(){
+		Boolean test1 = validateService.ThirdRuleSecondWay("af0bf0bfaf");
+		assertThat(test1, is(false));
+
+		Boolean test2 = validateService.ThirdRuleSecondWay("foala2foa");
+		assertThat(test2, is(true));
+
+		Boolean test3 = validateService.ThirdRuleSecondWay("foo1foo1");
+		assertThat(test3, is(false));
+
+		Boolean test4 = validateService.ThirdRuleSecondWay("foclfoc4foc");
+		assertThat(test4, is(true));
+
+		Boolean test5 = validateService.ThirdRuleSecondWay("aaaa");
+		assertThat(test5, is(false));
+
+		Boolean test6 = validateService.ThirdRuleSecondWay("bccu");
+		assertThat(test6, is(false));
+
+	}
+
+	@Test
+	public void shouldValidateMixedRules(){
 		Boolean test1 = validateService.Validate("ab");
 		assertThat(test1, is(false));
 
-		Boolean test2 = validateService.Validate("foolafoo1");
-		assertThat(test2, is(true));
+		Boolean test2 = validateService.Validate("foofoo");
+		assertThat(test2, is(false));
 
-		Boolean test3 = validateService.Validate("foofoo");
+		Boolean test3 = validateService.Validate("14#4");
 		assertThat(test3, is(false));
 
-		Boolean test4 = validateService.Validate("14#4");
+		Boolean test4 = validateService.Validate("Franklin8");
 		assertThat(test4, is(false));
+
+		Boolean test5 = validateService.Validate("foalafoa1");
+		assertThat(test5, is(true));
+
+		Boolean test6 = validateService.Validate("abcdef123");
+		assertThat(test6, is(true));
+
+		Boolean test7 = validateService.Validate("67ac89hcb");
+		assertThat(test7, is(true));
 	}
 
 }

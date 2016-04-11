@@ -18,14 +18,9 @@ public class ValidateService {
         if(password == null || password.length() == 0){
             return false;
         }
-        Boolean firstRule;
-        Boolean secondRule;
-        Boolean thirdRule;
-
-        firstRule = FirstRule(password);
-        secondRule = SecondRule(password);
-        thirdRule = ThirdRule(password);
-
+        Boolean firstRule = FirstRule(password);
+        Boolean secondRule = SecondRule(password);
+        Boolean thirdRule = ThirdRule(password);
 
         if(!firstRule || !secondRule || !thirdRule){
             return false;
@@ -34,6 +29,9 @@ public class ValidateService {
         return true;
     }
 
+    /*
+    First Rule-Must be between 5 and 12 characters in length.
+     */
     public Boolean FirstRule(String password){
 
         if(password.length() > 12 || password.length() < 5){
@@ -41,15 +39,11 @@ public class ValidateService {
         }
         return true;
 
-//        String regex = "^.{6,12}$";
-//        if (Pattern.matches(regex, password)) {
-//            return true;
-//        }else{
-//            return false;
-//        }
     }
 
-
+    /*
+    Second Rule-Must consist of a mixture of lowercase letters and numerical digits only, with at least one of each.
+     */
     public Boolean SecondRule(String password){
 
         char[] charArray = password.toCharArray();
@@ -79,9 +73,11 @@ public class ValidateService {
     }
 
 
-
+    /*
+    Third Rule-Must not contain any sequence of characters immediately followed by the same sequence.
+     */
     public Boolean ThirdRule(String password){
-        String regex = ".*(..+)\\1.*";
+        String regex = ".*(.+)\\1.*";
         if (Pattern.matches(regex, password)) {
             return false;
         }else{
@@ -89,13 +85,13 @@ public class ValidateService {
         }
     }
 
-    public Boolean ThirdRuleSecond(String password) {
+    public Boolean ThirdRuleSecondWay(String password) {
         char[] charArray = password.toCharArray();
 
         for (int i = 0; i < charArray.length; i++) {
             char currentCharacter = charArray[i];
 
-            for (int j = i + 2; j < charArray.length; j++) {
+            for (int j = i + 1; j < charArray.length; j++) {
                 if (charArray[j] == currentCharacter) {
                     int index = 1;
                     while (i + index < j && j + index < charArray.length) {
