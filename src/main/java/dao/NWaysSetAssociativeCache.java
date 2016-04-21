@@ -2,6 +2,7 @@ package dao;
 
 import algorithm.Algorithms;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class NWaysSetAssociativeCache<T1, T2> implements SetAssociativeCache<T1,
 
         this.N = N; // Cache Set Capacity
         this.totalNumOfCacheNode = totalNumOfCacheNode;
-        this.setMap = new HashMap<Integer, NodeSet<T1, T2>>();
+        this.setMap = Collections.synchronizedMap(new HashMap<Integer, NodeSet<T1, T2>>());
         this.numOfSets = totalNumOfCacheNode/N;
         this.algorithms = algorithms;
         setConfigration(N);
@@ -42,15 +43,19 @@ public class NWaysSetAssociativeCache<T1, T2> implements SetAssociativeCache<T1,
 
     public void saveToCache(T1 key, T2 value){
         int setIndex = key.hashCode()%numOfSets;
-        NodeSet currentNodeSet = setMap.get(setIndex);
-        algorithms.setValue(key, value, currentNodeSet);
+        synchronized(setMap) {
+            NodeSet currentNodeSet = setMap.get(setIndex);
+            algorithms.setValue(key, value, currentNodeSet);
+        }
     }
 
     public T2 getFromCache(T1 key){
         int setIndex = key.hashCode()%numOfSets;
-        NodeSet currentNodeSet = setMap.get(setIndex);
-        T2 value = (T2)algorithms.getValue(key, currentNodeSet);
-        return value;
+        synchronized(setMap) {
+            NodeSet currentNodeSet = setMap.get(setIndex);
+            T2 value = (T2) algorithms.getValue(key, currentNodeSet);
+            return value;
+        }
     }
 
 }
