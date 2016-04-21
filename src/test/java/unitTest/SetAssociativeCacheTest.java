@@ -56,5 +56,21 @@ public class SetAssociativeCacheTest {
 
 	}
 
+	@Test
+	public void testException() {
+		Algorithms<Integer, String> algorithms = new MRU<>();
+
+		String exceptionMessage = "";
+		try {
+			NWaysSetAssociativeCache<Integer, String> testCache = new NWaysSetAssociativeCache<Integer, String>(2, 5, algorithms);
+		} catch (Exception e) {
+			exceptionMessage = e.getMessage();
+		}
+
+		assertThat(exceptionMessage, is("TotalNumOfCacheNode is not divisiable by N"));
+
+	}
+
+
 
 }
