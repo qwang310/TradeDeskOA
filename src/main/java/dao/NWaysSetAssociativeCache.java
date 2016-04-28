@@ -44,7 +44,7 @@ public class NWaysSetAssociativeCache<T1, T2> implements SetAssociativeCache<T1,
     public void saveToCache(T1 key, T2 value){
         int setIndex = key.hashCode()%numOfSets;
         synchronized(setMap) {
-            NodeSet currentNodeSet = setMap.get(setIndex);
+            NodeSet<T1, T2> currentNodeSet = setMap.get(setIndex);
             algorithms.setValue(key, value, currentNodeSet);
         }
     }
@@ -52,8 +52,8 @@ public class NWaysSetAssociativeCache<T1, T2> implements SetAssociativeCache<T1,
     public T2 getFromCache(T1 key){
         int setIndex = key.hashCode()%numOfSets;
         synchronized(setMap) {
-            NodeSet currentNodeSet = setMap.get(setIndex);
-            T2 value = (T2) algorithms.getValue(key, currentNodeSet);
+            NodeSet<T1, T2> currentNodeSet = setMap.get(setIndex);
+            T2 value =  algorithms.getValue(key, currentNodeSet);
             return value;
         }
     }

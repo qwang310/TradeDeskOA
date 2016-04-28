@@ -40,7 +40,8 @@ public class LRU<T1, T2> implements Algorithms<T1, T2> {
         }
 
         if(nodeMap.size() == nodeSet.setCapacity){
-            T1 first = (T1)nodeSet.head.next.key;
+            CacheNode<T1, T2> nodeToRemove = nodeSet.head.next;
+            T1 first = nodeToRemove.key;
             nodeMap.remove(first);
             nodeSet.head.next = nodeSet.head.next.next;
             nodeSet.head.next.pre = nodeSet.head;
