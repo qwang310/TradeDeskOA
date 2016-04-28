@@ -59,7 +59,7 @@ public class NWaysSetAssociativeCache<T1, T2> implements SetAssociativeCache<T1,
     }
 
 
-    public T2 getValue(T1 key, NodeSet<T1,T2> nodeSet){
+    private T2 getValue(T1 key, NodeSet<T1,T2> nodeSet){
         Map<T1, CacheNode<T1, T2>> nodeMap = nodeSet.nodeMap;
         if(!nodeMap.containsKey(key)){
             return null;
@@ -73,7 +73,7 @@ public class NWaysSetAssociativeCache<T1, T2> implements SetAssociativeCache<T1,
         return nodeMap.get(key).value;
     }
 
-    public void setValue(T1 key, T2 value, NodeSet<T1,T2> nodeSet) {
+    private void setValue(T1 key, T2 value, NodeSet<T1,T2> nodeSet) {
 
         Map<T1, CacheNode<T1, T2>> nodeMap = nodeSet.nodeMap;
         if(getValue(key, nodeSet) != null){
