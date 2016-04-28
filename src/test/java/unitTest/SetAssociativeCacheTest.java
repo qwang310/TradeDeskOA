@@ -1,16 +1,10 @@
 package unitTest;
 
 
-import algorithm.Algorithms;
-import algorithm.LRU;
-import algorithm.MRU;
+import algorithm.*;
 import dao.NWaysSetAssociativeCache;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.springframework.cache.support.NullValue;
-
-import javax.validation.constraints.Null;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -23,9 +17,11 @@ public class SetAssociativeCacheTest {
 
 	@Test
 	public void testLRU(){
+		final int N = 2; //NodeSet Capacity
+		final int totalNumOfCacheNode = 2;
 
-		Algorithms<Integer, String> algorithms = new LRU<>();
-		NWaysSetAssociativeCache<Integer, String> testCache = new NWaysSetAssociativeCache<Integer, String>(2, 2, algorithms);
+		Algorithms algorithms = new LRU();
+		NWaysSetAssociativeCache<Integer, String> testCache = new NWaysSetAssociativeCache<Integer, String>(N, totalNumOfCacheNode, algorithms);
 
 		testCache.saveToCache(10, "one");
 		testCache.saveToCache(1099, "two");
@@ -42,8 +38,10 @@ public class SetAssociativeCacheTest {
 
 	@Test
 	public void testMRU() {
-		Algorithms<Integer, String> algorithms = new MRU<>();
-		NWaysSetAssociativeCache<Integer, String> testCache = new NWaysSetAssociativeCache<Integer, String>(2, 2, algorithms);
+		final int N = 2; //NodeSet Capacity
+		final int totalNumOfCacheNode = 2;
+		Algorithms algorithms = new MRU();
+		NWaysSetAssociativeCache<Integer, String> testCache = new NWaysSetAssociativeCache<Integer, String>(N, totalNumOfCacheNode, algorithms);
 		testCache.saveToCache(10, "one");
 		testCache.saveToCache(1099, "two");
 		testCache.saveToCache(2112, "three");
@@ -58,11 +56,12 @@ public class SetAssociativeCacheTest {
 
 	@Test
 	public void testException() {
-		Algorithms<Integer, String> algorithms = new MRU<>();
-
+		final int N = 2; //NodeSet Capacity
+		final int totalNumOfCacheNode = 5;
+		Algorithms algorithms = new MRU();
 		String exceptionMessage = "";
 		try {
-			NWaysSetAssociativeCache<Integer, String> testCache = new NWaysSetAssociativeCache<Integer, String>(2, 5, algorithms);
+			NWaysSetAssociativeCache<Integer, String> testCache = new NWaysSetAssociativeCache<Integer, String>(N, totalNumOfCacheNode, algorithms);
 		} catch (Exception e) {
 			exceptionMessage = e.getMessage();
 		}
