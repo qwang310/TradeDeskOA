@@ -3,6 +3,7 @@ package dao;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class NodeSet<T1, T2> {
     public NodeSet(int setIndex, int setCapacity){
         this.setIndex = setIndex;
         this.setCapacity = setCapacity;
-        this.nodeMap = new HashMap<T1, CacheNode<T1, T2>>();
+        this.nodeMap = Collections.synchronizedMap(new HashMap<T1, CacheNode<T1, T2>>());
         this.head.next = tail;
         this.tail.pre = head;
     }

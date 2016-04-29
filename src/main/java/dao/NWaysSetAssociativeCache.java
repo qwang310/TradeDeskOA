@@ -1,21 +1,22 @@
 package dao;
 
 import algorithm.Algorithms;
+import service.CacheServie;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by qu2k8o6 on 4/19/16.
  */
-public class NWaysSetAssociativeCache<T1, T2> implements SetAssociativeCache<T1, T2> {
+public class NWaysSetAssociativeCache<T1, T2>{
 
     private final int N; //NodeSet Capacity
     private final int totalNumOfCacheNode;
     private Map<Integer, NodeSet<T1, T2>> setMap;
     private final int numOfSets;
     private final Algorithms algorithms;
+    private final CacheServie<T1, T2> cacheServie = new CacheServie<>();
 
     public NWaysSetAssociativeCache(int N, int totalNumOfCacheNode, Algorithms algorithms){
         if(N < 1 || totalNumOfCacheNode < N){
@@ -28,7 +29,7 @@ public class NWaysSetAssociativeCache<T1, T2> implements SetAssociativeCache<T1,
 
         this.N = N; // Cache Set Capacity
         this.totalNumOfCacheNode = totalNumOfCacheNode;
-        this.setMap = Collections.synchronizedMap(new HashMap<Integer, NodeSet<T1, T2>>());
+        this.setMap = new HashMap<Integer, NodeSet<T1, T2>>();
         this.numOfSets = totalNumOfCacheNode/N;
         this.algorithms = algorithms;
         setConfigration(N);
@@ -43,78 +44,17 @@ public class NWaysSetAssociativeCache<T1, T2> implements SetAssociativeCache<T1,
 
     public void saveToCache(T1 key, T2 value){
         int setIndex = key.hashCode()%numOfSets;
-        synchronized(setMap) {
-            NodeSet<T1, T2> currentNodeSet = setMap.get(setIndex);
-            setValue(key, value, currentNodeSet);
-        }
+        NodeSet<T1, T2> currentNodeSet = setMap.get(setIndex);
+        int indexOfCacheNodeToBeRemovedb = algorithms.getIndexOfCacheNodeToBeRemoved(N);
+        cacheServie.setValue(key, value, currentNodeSet, indexOfCacheNodeToBeRemovedb);
     }
 
     public T2 getFromCache(T1 key){
         int setIndex = key.hashCode()%numOfSets;
-        synchronized(setMap) {
-            NodeSet<T1, T2> currentNodeSet = setMap.get(setIndex);
-            T2 value = getValue(key, currentNodeSet);
-            return value;
-        }
+        NodeSet<T1, T2> currentNodeSet = setMap.get(setIndex);
+        T2 value = cacheServie.getValue(key, currentNodeSet);
+        return value;
     }
 
-
-    private T2 getValue(T1 key, NodeSet<T1,T2> nodeSet){
-        Map<T1, CacheNode<T1, T2>> nodeMap = nodeSet.nodeMap;
-        if(!nodeMap.containsKey(key)){
-            return null;
-        }
-        CacheNode<T1, T2> currentCache = nodeMap.get(key);
-        currentCache.pre.next = currentCache.next;
-        currentCache.next.pre = currentCache.pre;
-
-        moveToTail(currentCache, nodeSet);
-
-        return nodeMap.get(key).value;
-    }
-
-    private void setValue(T1 key, T2 value, NodeSet<T1,T2> nodeSet) {
-
-        Map<T1, CacheNode<T1, T2>> nodeMap = nodeSet.nodeMap;
-        if(getValue(key, nodeSet) != null){
-            nodeMap.get(key).value = value;
-            return;
-        }
-
-        if(nodeSet.setCapacity == 0){
-            return;
-        }
-
-        if(nodeMap.size() == nodeSet.setCapacity){
-            removeCache(nodeSet);
-        }
-
-        CacheNode<T1, T2> newCacheNode = new CacheNode<T1, T2>(key, value);
-        moveToTail(newCacheNode, nodeSet);
-        nodeMap.put(key, newCacheNode);
-
-    }
-
-    private void removeCache(NodeSet<T1,T2> nodeSet){
-        int counter = algorithms.getIndexOfCacheNodeToBeRemoved(N);
-        CacheNode<T1, T2> nodeToRemove = nodeSet.head.next;
-        while(counter > 0){
-            nodeToRemove = nodeToRemove.next;
-            counter--;
-        }
-        T1 first = nodeToRemove.key;
-        nodeSet.nodeMap.remove(first);
-        nodeSet.head.next = nodeSet.head.next.next;
-        nodeSet.head.next.pre = nodeSet.head;
-
-    }
-
-
-    private void moveToTail(CacheNode<T1, T2> currentCache, NodeSet<T1,T2> nodeSet){
-        nodeSet.tail.pre.next = currentCache;
-        currentCache.pre = nodeSet.tail.pre;
-        currentCache.next = nodeSet.tail;
-        nodeSet.tail.pre = currentCache;
-    }
 
 }
