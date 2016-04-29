@@ -29,12 +29,12 @@ public class CacheServie<T1, T2> {
     public void setValue(T1 key, T2 value, NodeSet<T1,T2> nodeSet, int indexOfCacheNodeToBeRemovedb) {
 
         Map<T1, CacheNode<T1, T2>> nodeMap = nodeSet.nodeMap;
-        if(getValue(key, nodeSet) != null){
-            nodeMap.get(key).value = value;
-            return;
-        }
-
         synchronized (nodeMap) {
+            if(getValue(key, nodeSet) != null){
+                nodeMap.get(key).value = value;
+                return;
+            }
+
             if (nodeMap.size() == nodeSet.setCapacity) {
                 removeCache(nodeSet, indexOfCacheNodeToBeRemovedb);
             }
